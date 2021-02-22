@@ -1,6 +1,7 @@
 #include<stdio.h>
 #include<ctype.h>
 #include<string.h>
+#include<stdlib.h>
 
 char stack[30];
 int top=-1;
@@ -54,14 +55,14 @@ char *infixToPostfix(char *infix, char *postfix){
 }
 
 char *reverseString(char *str){
-    int len=strlen(str), i;
-    int end=len-1;
-    for(i=0; i<len; i++){
-        str[i]=str[end];
-        end--;
+    char *revString;
+    revString = (char*)malloc((strlen(str)+1)*sizeof(char));
+    int i, j;
+    for(i=0, j=strlen(str)-1; i<strlen(str); i++, j--){
+        revString[i]=str[j];
     }
-    str[i]='\0';
-    return str;
+    revString[i]='\0';
+    return revString;
 }
 
 char *infixToPrefix(char *infix, char *postfix){
@@ -72,7 +73,7 @@ char *infixToPrefix(char *infix, char *postfix){
     for(int i=0; i<strlen(infix); i++){
         if(infix[i]=='(')
             infix[i]=')';
-        if(infix[i]==')')
+        else if(infix[i]==')')
             infix[i]='(';
     }
 

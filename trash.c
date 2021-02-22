@@ -1,262 +1,163 @@
 #include<stdio.h>
 #include<stdlib.h>
-int ele,pos,i,ch;
-struct node
-{
-	int info;
-	struct node *prev;
-	struct node *next;
-};
 
-struct node *head=NULL;
+int size=0;
 
-void insertatfront()
-{
-	struct node *t=(struct node*)malloc(sizeof(struct node));
-	printf("\nEnter the element to be inserted: ");
-	scanf("%d",&ele);
-	t->info=ele;
-	t->prev=NULL;
-	t->next=NULL;
-	if(head==NULL)
-	{
-		head=t;
+struct Node{
+	int data;
+	struct Node *next;
+}*head=NULL, *tail=NULL;
+
+typedef struct Node Node;
+
+void insertInBegining(int num){
+	Node *temp;
+	temp=(Node*)malloc(sizeof(Node));
+	temp->data=num;
+
+	if(head==NULL){
+		temp->next=NULL;
+		head=temp;
+		tail=temp;
+	}else{
+		temp->next=head;
+		head=temp;
 	}
-	
-	else
-	{
-		t->next=head;
-		head=t;
-	}
+	size++;
 }
 
-void insertatend()
-{
-	struct node *t=(struct node*)malloc(sizeof(struct node));
-	struct node *temp;
-	temp=head;
-	printf("\nEnter the element to be inserted: ");
-	scanf("%d",&ele);
-	t->info=ele;
-	t->prev=NULL;
-	t->next=NULL;
-	if(head==NULL)
-	{
-		head=t;
+void insertInEnd(int num){
+	Node *temp;
+	temp=(Node*)malloc(sizeof(Node));
+	temp->data=num;
+
+	if(head==tail){
+		temp->next=NULL;
+		head=temp;
+		tail=temp;
+	}else{
+		temp->next=NULL;
+		tail->next=temp;
+		tail=temp;
 	}
-	
-	else
-	{
-		while(temp->next!=NULL)
-		{
-			temp=temp->next;
-			if(temp==NULL)
-			{
-				printf("\nInsert not possible");
-				return;
-			}
-		}
-		
-		temp->next=t;
-		t->prev=temp;
-	}
+	size++;
 }
 
-void insertatpos()
-{
-	struct node *t=(struct node*)malloc(sizeof(struct node));
-	struct node *temp;
-	temp=head;
-	printf("\nEnter the position at which element has to be inserted: ");
-	scanf("%d",&pos);
-	printf("\nEnter the element to be inserted: ");
-	scanf("%d",&ele);
-	t->info=ele;
-	t->prev=NULL;
-	t->next=NULL;
-	if(head==NULL)
-	{
-		head=t;
+void display(){
+	Node *temp=head;
+	while(temp!=NULL){
+		printf("%d\t", temp->data);
+		temp=temp->next;
 	}
-	
-	else
-	{
-		for(i=1;i<pos-1;i++)
-		{
-			temp=temp->next;
-			if(temp==NULL)
-			{
-				printf("\nInsert not possible");
-				return;
-			}
-		}
-		
-		t->next=temp->next;
-		t->prev=temp;
-		temp->next=t;
-		temp->next->prev=t;
-		printf("\nElement is inserted");
-	}
+	printf("\n");
 }
 
-void displayf()
-{
-	struct node *t;
-	t=head;
-	printf("\nThe elements are:\n");
-	while(t!=NULL)
-	{
-		printf("%d---",t->info);
-		t=t->next;
-	}	
-}
+void insertAtPosition(int num, int pos){
+	Node *p=head, *q, *temp;
+	temp=(Node*)malloc(sizeof(Node));
+	temp->data=num;
 
-void deleteatfront()
-{
-	struct node *t;
-	if(head==NULL)
-	{
-		printf("\nDeleteing isn't possible");
-	}
-	else
-	{
-		t=head;
-		head=head->next;
-		head->prev=NULL;
-		printf("\nDeleted element is %d",t->info);
-		free(t);
-	}
-}
-
-void deleteatend()
-{
-	struct node *t,*s;
-	t=head;
-	if(head==NULL)
-	{
-		printf("Deleteing isn't possible");
-	}
-	else
-	{
-		while(t->next!=NULL)
-		{
-			s=t;
-			t=t->next;
-		}
-		
-		s->next=NULL;
-		printf("\nDeleted element is %d",t->info);
-		free(t);
-	}
-}
-
-void deleteafterele()
-{
-	struct node *p,*q;
-	p=head;
-	printf("\nEnter the element after which it has to be deleted: ");
-	scanf("%d",&ele);
-	while(p->info!=ele)
-	{
-		p=p->next;
-		if(p==NULL)
-		{
-			printf("\nDeleteing isn't possible");
-		}
-	}
-	q=p->next;
-	p->next=q->next;
-	q->next->prev=p;
-	printf("\nDeleted is deleted");
-	free(q);
-}
-
-void deleteatpos()
-{
-	printf("\nEnter the position: ");
-	scanf("%d",&pos);
-	struct node *t,*p;
-	t=head;
-	int i=1;
-	while(i<pos-1)
-	{
-		t=t->next;
-		i++;
-	}
-	p=t->next;
-	t->next=p->next;
-	if(p->next==NULL)
-	{
-		printf("\nElement is deleted");
+	if(pos>size+1){
+		printf("ERROR invalid position\n");
 		return;
 	}
-	p->next->prev=t;
-	free(p);
-	printf("\nElement is deleted");
-	
-}
 
-void search()
-{
-	int i=1;
-	printf("\nEnter the element to be searched: ");
-	scanf("%d",&ele);
-	struct node *t;
-	t=head;
-	while(t->info!=ele)
-	{
-		i+=1;
-		t=t->next;
-		if(t==NULL)
-		{
-			i=-1;
+	if(pos==1){
+		insertInBegining(num);
+	}else if(pos==size){
+		insertInEnd(num);
+	}else{
+		for(int i=0; i<pos; i++){
+			q=p;
+			p=p->next;
 		}
+		q->next=temp;
+		temp->next=p;
 	}
-	if(i==-1)
-	{
-		printf("\nElemet not found");
-	}
-	else printf("\nFound at position %d",i);
+	size++;
 }
 
-void displaye()
-{
-	struct node *tail;
-	// traverse all the way to the end [ may be]
-	tail=head;
-	while(tail!=NULL){
-		tail=tail->next;
+int deleteFromBegining(){
+	Node *temp;
+	int deletedElement;
+	if(head==NULL){
+		printf("ERROR list is empty");
+		return -1;
+	}else{
+		temp=head;
+		head=head->next;
+		deletedElement=temp->data;
 	}
-	printf("\nThe elements are:\n");
-	while(tail!=NULL)
-	{
-		printf("%d---",tail->info);
-		tail=tail->prev;
-	}	
+	free(temp);
+	size--;
+	return deletedElement;
 }
+
+int deleteFromEnd(){
+	Node *temp, *p=head, *q;
+	int deletedElement;
+	deletedElement=tail->data;
 	
-
-int main()
-{
-	printf("\n1.Insert at front\n2.Insert at end\n3.Insert at position\n4.Delete at front\n5.Delete at end\n6.Delete after element\n7.Delete at position\n8.Search\n9.Display at front\n10.Display from end\n11.Exit");
-	while(1)
-	{
-		printf("\nEnter your choice: ");
-		scanf("%d",&ch);
-		switch(ch)
-		{
-			case 1:insertatfront(); break;
-			case 2:insertatend(); break;
-			case 3:insertatpos(); break;
-			case 4:deleteatfront(); break;
-			case 5:deleteatend(); break;
-			case 6:deleteafterele(); break;
-			case 7:deleteatpos(); break;
-			case 8:search(); break;
-			case 9:displayf(); break;
-			case 10:displaye(); break;
-			case 11:exit(0); break;
-			default:printf("\nInvalid choice");
+	if(tail==NULL){
+		printf("ERROR list is empty");
+		return -1;
+	}else{
+		while(p!=NULL){
+			q=p;
+			p=p->next;
 		}
+		q->next=NULL;
+		tail=q;
+		free(p);
 	}
+	return deletedElement;
+}
+
+int main(){
+	int choice, num, pos;
+
+	printf("\n\n1. Insert in begginig\n2. Insert at end\n3. Insert at position\n4. Delete in begining\n5. Delete at end\n6. Delete at a position\n7. Display list\n8. Exit\n\n");
+
+	do{
+		printf("_______________________\n");
+		printf("Enter you choice ?: ");
+		scanf("%d", &choice);
+		switch(choice){
+			case 1:
+				printf("Element to insert in begining?= ");
+				scanf("%d", &num);
+				insertInBegining(num);
+				break;
+			case 2:
+				printf("Element to insert in end?= ");
+				scanf("%d", &num);
+				insertInEnd(num);
+				break;
+			case 3:
+				printf("Enter the position ?= ");
+				scanf("%d", &pos);
+				printf("Element to insert in position?= ");
+				scanf("%d", &num);
+				insertAtPosition(num, pos);
+				break;
+			case 4:
+				if((num=deleteFromBegining())!=-1){
+					printf("Deleted element form begining : %d\n", num);
+				}
+				break;
+			case 5:
+				if((num=deleteFromEnd())!=-1){
+					printf("Deleted element form begining : %d\n", num);
+				}
+				break;
+			case 7:
+				display();
+				break;
+			case 8:
+				printf("THANK YOU\n");
+				return 0;
+			default:
+				printf("INVALID input, try again\n");
+		}
+	}while(choice!=8);
 }
