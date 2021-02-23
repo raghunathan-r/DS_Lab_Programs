@@ -720,7 +720,105 @@ SUBJECT CODE : 18IS33   |  VTU - 3 rd Semester | Information Science and Compute
 
     [https://www.youtube.com/watch?v=8QxlrRws9OI](https://www.youtube.com/watch?v=8QxlrRws9OI)
 
-- [ ]  ⚠️Do infix to prefix
+    ```c
+    #include<stdio.h>
+    #include<ctype.h>
+    #include<string.h>
+    #include<stdlib.h>
+
+    char stack[30];
+    int top=-1;
+
+    void push(char ch){
+    	stack[++top]=ch;
+    }
+
+    char pop(){
+    	return stack[top--];
+    }
+
+    int precedence(char ch){
+    	if(ch=='^')
+    		return 3;
+    	if(ch=='*' || ch=='/')
+    		return 2;
+    	if(ch=='+' || ch=='-')
+    		return 1;
+    	return 0;
+    }
+
+    char *infixToPostfix(char *infix, char *postfix){
+        char ch;
+        int i=0, j=0;
+        push(' ');
+    	while((ch=infix[i++])!='\0'){
+    		if(ch=='('){
+    			push(ch);
+    		}else if(isalnum(ch)){
+    			postfix[j++]=ch;
+    		}else if(ch==')'){
+    			while(stack[top]!='('){
+    				postfix[j++]=pop();
+    			}
+    			pop();
+    		}else{
+    			while (precedence(stack[top])>=precedence(ch))
+    			{
+    				postfix[j++]=pop();
+    			}
+    			push(ch);
+    		}
+    	}
+
+    	while(stack[top]!=' '){
+    		postfix[j++]=pop();
+    	}
+    	postfix[j]='\0';
+        return postfix;
+    }
+
+    char *reverseString(char *str){
+        char *revString;
+        revString = (char*)malloc((strlen(str)+1)*sizeof(char));
+        int i, j;
+        for(i=0, j=strlen(str)-1; i<strlen(str); i++, j--){
+            revString[i]=str[j];
+        }
+        revString[i]='\0';
+        return revString;
+    }
+
+    char *infixToPrefix(char *infix, char *postfix){
+        // Reverse the infix
+        infix=reverseString(infix);
+
+        // Replace '(' with ')' and vise versa
+        for(int i=0; i<strlen(infix); i++){
+            if(infix[i]=='(')
+                infix[i]=')';
+            else if(infix[i]==')')
+                infix[i]='(';
+        }
+
+        return reverseString(infixToPostfix(infix, postfix));
+
+    }
+
+    int main(){
+    	char infix[30], postfix[30], ch;
+    	int i=0, j=0;
+
+    	printf("\n\nInfix expression ?= ");
+    	scanf("%s", infix);
+
+    	
+
+    	printf("Prefix expression : %s\n", infixToPrefix(infix, postfix));
+    	return 0;
+    }
+    ```
+
+- [x]  ⚠️Do infix to prefix
 
 ***Q 5. Design and implement an algorithm to evaluate an arithmetic expressions which may be any form (postfix, prefix, infix), and demonstrate its working with suitable examples.***
 
@@ -1132,6 +1230,569 @@ SUBJECT CODE : 18IS33   |  VTU - 3 rd Semester | Information Science and Compute
     ```
 
 - Circular queue using linked list
+
+    ```c
+    #include<stdio.h>
+    #include<stdlib.h>
+
+    struct Node{
+        int data;
+        struct Node *next;
+    }*front=NULL, *rear=NULL;
+
+    typedef struct Node Node;
+
+    Node *initNode(int num){
+        Node *temp;
+        temp=(Node*)malloc(sizeof(Node));
+        if(temp==NULL){
+            printf("ERROR memeory full\n");
+            return NULL;
+        }else{
+            temp->data=num;
+            temp->next=NULL;
+            return temp;
+        }
+    }
+
+    void enqueue(int num){
+        Node *temp=initNode(num);
+        if(front==NULL && rear==NULL){
+            temp->next=front;
+            rear=front=temp;
+        }else{
+            rear->next=temp;
+            temp->next=front;
+            rear=temp;
+        }
+    }
+
+    int dequeue(){
+        Node *temp=front;
+        int deletedElement;
+
+        if(front==NULL && rear==NULL){
+            printf("ERROR queue is empty\n");
+            return 0;
+        }else if(front==rear){
+            front=rear=NULL;
+            deletedElement=temp->data;
+            free(temp);
+        }else{
+            front=front->next;
+            rear->next=front;
+            deletedElement=temp->data;
+            free(temp);
+        }
+        return deletedElement;
+    }
+
+    void display(){
+        Node *temp=front;
+        if(front==NULL && rear==NULL){
+            printf("ERROR Queue is empty\n");
+            return;
+        }else{
+            do{
+                printf("%d\t", temp->data);
+                temp=temp->next;
+            }while(temp!=front);
+            printf("\n\n");
+        }
+    }
+
+    int main()
+    {
+        int ch;
+        printf("\n1. Add element\n2. Delete element\n3.Display queue\n4.Exit\n\n");
+        
+        do
+        {
+            printf("\nEnter the option corresponding to your desired choice : ");
+            scanf("%d", &ch);
+            switch (ch)
+            {
+                case 1:
+                    {
+                        int num;
+                        printf("Enter the element to be added : ");
+                        scanf("%d", &num);
+                        enqueue(num);
+                        break;
+                    }
+                case 2:
+                    {
+                        printf("The deleted element is : %d\n", dequeue());
+                        break;
+                    }
+                case 3:
+                    {
+                        display();
+                        break;
+                    }
+                case 4:
+                    {
+                        printf("Thank you\n\n");
+                        return 0;
+                    }
+                default:
+                    printf("INVALID INPUT TRY AGAIN\n");
+                    break;
+            }        
+        } while (ch != 4);
+    }
+    ```
+
+---
+
+## Linked lists
+
+***Q 7. Design and implement a dynamic list (Singly linked list/ doubly linked list) to store any
+information which needs a linear data structure.***
+
+- Singly linked list
+
+    ```c
+    #include<stdio.h>
+    #include<stdlib.h>
+
+    struct Node{
+    	int data;
+    	struct Node *next;
+    }*head=NULL;
+
+    typedef struct Node Node;
+
+    Node *initNode(int num){
+    	Node *temp=(Node*)malloc(sizeof(Node));
+    	temp->data=num;
+    	temp->next=NULL;
+    	return temp;
+    }
+
+    void insertAtBegining(int num){
+    	Node *temp=initNode(num);
+    	if(head==NULL){
+    		temp->next=NULL;
+    		head=temp;
+    	}else{
+    		temp->next=head;
+    		head=temp;
+    	}
+    }
+
+    void insertAtEnd(int num){
+    	Node *temp=head;
+    	while (temp->next!=NULL)
+    	{
+    		temp=temp->next;
+    	}
+    	temp->next=initNode(num);
+    }
+
+    void insertAtPos(int num, int pos){
+    	Node *p=head, *q;
+    	for(int i=0; i<pos-1; i++){
+    		q=p;
+    		p=p->next;
+    	}
+    	q->next=initNode(num);
+    	q->next->next=p;
+    }
+
+    int deleteInBeg(){
+    	int deletedElement;
+    	Node *temp;
+    	if(head==NULL){
+    		printf("ERROR list is empty\n");
+    		return 0;
+    	}else{
+    		deletedElement=head->data;
+    		temp=head;
+    		head=head->next;
+    	}
+    	free(temp);
+    	return deletedElement;
+    }
+
+    int deleteInEnd(){
+    	int deletedElement;
+    	Node *temp, *p=head, *q;
+    	if(head==NULL){
+    		printf("ERROR list is empty\n");
+    		return 0;
+    	}else{
+    		while (p->next!=NULL)	
+    		{	
+    			q=p;
+    			p=p->next;
+    		}
+    		deletedElement=p->data;
+    		if(p==head){
+    			head=NULL;
+    		}else{
+    			q->next=NULL;
+    		}
+    		free(p);
+    	}
+    	return deletedElement;
+    }
+
+    int deleteAtPos(int pos){
+    	Node *p=head, *q;
+    	int deletedElement, i=0;
+
+    	for(i=0; i<pos-1; i++){
+    		q=p;
+    		p=p->next;
+    	}
+
+    	deletedElement=p->data;
+    	if(p==head){
+    		head==NULL;
+    	}else{
+    		q->next=p->next;
+    	}
+    	free(p);
+    	return deletedElement;
+    }
+
+    void display(){
+    	Node *temp=head;
+    	while(temp!=NULL){
+    		printf("%d\t", temp->data);
+    		temp=temp->next;
+    	}
+    	printf("\n\n");
+    }
+
+    int main(){
+    	int choice, num, pos;
+
+    	printf("\n\n1. Insert in begining\n2. Insert at end\n3. Insert in position\n");
+    	printf("4. Delete in begining\n5. Delete at end\n6. Delete in position\n");
+    	printf("7. Display list\n8. Exit\n\n");
+
+    	do{
+    		printf("___________________________\n");
+    		printf("Choice ?= ");
+    		scanf("%d", &choice);
+
+    		switch (choice)
+    		{
+    		case 1:
+    			printf("Enter number to insert : ");
+    			scanf("%d", &num);
+    			insertAtBegining(num);
+    			break;
+    		case 2:
+    			printf("Enter number to insert : ");
+    			scanf("%d", &num);
+    			insertAtEnd(num);
+    			break;
+    		case 3:
+    			printf("Enter number to insert and position respectively :-\n");
+    			scanf("%d %d", &num, &pos);
+    			insertAtPos(num, pos);
+    			break;
+    		case 4:
+    			num=deleteInBeg();
+    			if(num){
+    				printf("Deleted element : %d\n", num);
+    			}
+    			break;
+    		case 5:
+    			num=deleteInEnd();
+    			if(num){
+    				printf("Deleted element : %d\n", num);
+    			}
+    			break;
+    		case 6:
+    			printf("Enter position to delete : ");
+    			scanf("%d", &pos);
+    			printf("Deleted element : %d\n", deleteAtPos(pos));
+    			break;
+    		case 7:
+    			display();
+    			break;
+    		default:
+    			break;
+    		}
+    	}while(choice!=8);
+    }
+    ```
+
+- Doubly linked list
+
+    ```c
+    #include<stdio.h>
+    #include<stdlib.h>
+
+    struct Node
+    {
+        int data;
+        struct Node *next;
+        struct Node *prev;
+    }*head = NULL, *tail=NULL;
+
+    typedef struct Node Node;
+
+    Node *initNode(int num){
+        Node *temp=(Node*)malloc(sizeof(Node));
+        temp->data=num;
+        temp->prev=NULL;
+        temp->next=NULL;
+        return temp;
+    }
+
+    void insertAtBegining(int num){
+    	Node *temp=initNode(num);
+    	if(head==NULL){
+    		temp->next=NULL;
+            temp->prev=NULL;
+            head=tail=temp;
+    	}else{
+    		temp->next=head;
+            temp->prev=NULL;
+    		head=temp;
+    	}
+    }
+
+    void insertAtEnd(int num){
+        Node *temp=initNode(num);
+        if(head==NULL){
+            insertAtBegining(num);
+        }else{
+            temp->prev=tail;
+            temp->next=NULL;
+            tail->next=temp;
+            tail=temp;
+        }
+    }
+
+    int lengthOfList(){
+        Node *temp=head;
+        int count=0;
+        while (temp!=NULL)
+        {
+            temp=temp->next;
+            count++;
+        }
+        printf("ALERT : List length -> %d\n", count);
+        return count;
+    }
+
+    void insertAtPos(int num, int pos){
+        Node *p=head, *q, *temp;
+        if(pos>lengthOfList()){
+            printf("ERROR unable to add to list\n");
+            return;
+        }
+        for(int i=0; i<pos-1; i++){
+            p=p->next;
+        }
+        temp=initNode(num);
+            temp->prev=p;
+            temp->next=p->next;
+        if(p->next!=NULL){
+            p->next->prev=temp;
+        }
+        p->next=temp;
+    }
+
+    void displayFromBegining(){
+        Node *temp=head;
+    	while(temp!=NULL){
+    		printf("%d\t", temp->data);
+    		temp=temp->next;
+    	}
+    	printf("\n\n");
+    }
+
+    int deleteInBeg(){
+        Node *temp;
+        int deletedElement;
+        if(head==NULL){
+            printf("ERROR list is empty\n");
+            return 0;
+        }else{
+            temp=head;
+            head->next->prev=NULL;
+            head=head->next;
+            deletedElement=temp->data;
+        }
+        free(temp);
+        return deletedElement;
+    }
+
+    int deleteInEnd(){
+        Node *temp;
+        int deletedElement;
+        if(tail==NULL){
+            printf("ERROR list is empty\n");
+            return 0;
+        }else{
+            temp=tail;
+            tail->prev->next=NULL;
+            tail=tail->prev;
+            deletedElement=temp->data;
+        }
+        free(temp);
+        return deletedElement;
+    }
+
+    int deleteAtPos(int pos){
+        Node *p=head, *temp;
+        if(pos>lengthOfList()){
+            printf("ERROR element not added\n");
+            return 0;
+        }else{
+            for(int i=lengthOfList(); i>pos+1; i--){
+                p=p->next;
+            }
+            p->prev->next=p->next;
+            if(p->next!=NULL){
+                p->next->prev=p->next;
+            }
+        }
+    }
+
+    int main(){
+    	int choice, num, pos;
+
+    	printf("\n\n1. Insert in begining\n2. Insert at end\n3. Insert in position\n");
+    	printf("4. Delete in begining\n5. Delete at end\n6. Delete in position\n");
+    	printf("7. Display list form beg\n8. Display list from end\n9. Exit\n\n");
+
+    	do{
+    		printf("___________________________\n");
+    		printf("Choice ?= ");
+    		scanf("%d", &choice);
+
+    		switch (choice)
+    		{
+    		case 1:
+    			printf("Enter number to insert : ");
+    			scanf("%d", &num);
+    			insertAtBegining(num);
+    			break;
+    		case 2:
+    			printf("Enter number to insert : ");
+    			scanf("%d", &num);
+    			insertAtEnd(num);
+    			break;
+    		case 3:
+    			printf("Enter number to insert and position respectively :-\n");
+    			scanf("%d %d", &num, &pos);
+    			insertAtPos(num, pos);
+    			break;
+    		case 4:
+    			num=deleteInBeg();
+    			if(num){
+    				printf("Deleted element : %d\n", num);
+    			}
+    			break;
+    		case 5:
+    			num=deleteInEnd();
+    			if(num){
+    				printf("Deleted element : %d\n", num);
+    			}
+    			break;
+    		case 6:
+    			printf("Enter position to delete : ");
+    			scanf("%d", &pos);
+                num=deleteAtPos(pos);
+                if(num){
+                    printf("Deleted element : %d\n", num);
+                }
+                break;
+    		case 7:
+    			displayFromBegining();
+    			break;
+    		default:
+    			break;
+    		}
+    	}while(choice!=9);
+    }
+    ```
+
+---
+
+## Binary trees
+
+***Q 8. Design and implement binary tree and demonstrate its working.***
+
+- Code
+
+    ```c
+    #include<stdio.h>
+    #include<stdlib.h>
+
+    struct Node{
+        int info;
+        struct Node *left;
+        struct Node *right;
+    };
+
+    typedef struct Node Node;
+
+    Node* maketree(){
+        Node *p;
+        int info;
+
+        printf("Enter info [-1 for NULL] : ");
+        scanf("%d", &info);
+        if(info==-1)
+            return NULL;
+        
+        p=(Node*)malloc(sizeof(Node));
+        p->info=info;
+        printf("Enter the left child of %d\n", info);
+        p->left=maketree();
+        printf("Enter the right child of %d\n", info);
+        p->right=maketree();
+
+        return p;
+    }
+
+    void preorder(Node *p){
+        if(p!=NULL){
+            printf("%d-> ", p->info);
+            preorder(p->left);
+            preorder(p->right);
+        }   
+    }
+
+    void postorder(Node *p){
+        if(p!=NULL){
+            preorder(p->left);
+            preorder(p->right);
+            printf("%d-> ", p->info);
+        }
+    }
+
+    void inorder(Node *p){
+        if(p!=NULL){
+            inorder(p->left);
+            printf("%d=> ", p->info);
+            inorder(p->right);
+        }
+    }
+
+    int main(){
+        Node *root;
+        root=maketree();
+
+        printf("Preorder :-\n");
+        preorder(root);
+        printf("\n\nPostorder :-\n");
+        postorder(root);
+        printf("\n\nInorder :-\n");
+        inorder(root);
+
+        return 0;
+    }
+    ```
 
 ---
 
