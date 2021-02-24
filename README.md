@@ -10,9 +10,10 @@ SUBJECT CODE : 18IS33   |  VTU - 3 rd Semester | Information Science and Compute
 
 ***Q 1. Design and implement C program to demonstrate advantages/usage of pointers. (E.g. add two Matrices using pointer concept, Functions for string manipulation, String manipulation functions).***
 
-- Matrix multiplication
-
-    [How to dynamically allocate a 2D array in C](http://www.firmcodes.com/dynamically-allocate-2d-array-c/)
+<details open>
+<summary>Matrix multiplication</summary>
+<br>
+[How to dynamically allocate a 2D array in C](http://www.firmcodes.com/dynamically-allocate-2d-array-c/)
 
     Multiplying matrix - [https://www.programiz.com/c-programming/examples/matrix-multiplication](https://www.programiz.com/c-programming/examples/matrix-multiplication)
 
@@ -143,9 +144,12 @@ SUBJECT CODE : 18IS33   |  VTU - 3 rd Semester | Information Science and Compute
     	displayMatrix(prod);
     }
     ```
+</details>
 
-- String manipulation
 
+<details>
+<summary>String manipulation</summary>
+<br>
     ```c
     // Design and implement C program to demonstrate advantages/usage of pointers. (E.g. String manipulation functions)
 
@@ -274,12 +278,18 @@ SUBJECT CODE : 18IS33   |  VTU - 3 rd Semester | Information Science and Compute
     }
     ```
 
+</details>
+
+
+
+
 ***Q 2. Design and implement a database application in C. (E.g. Student/Faculty information using structures).***
 
 - Array of structures implementation
-- Linked list implementation
-
-    ```c
+<details>
+<summary>Linked list implementation</summary>
+<br>
+```c
     #include <stdio.h>
     #include <stdlib.h>
     #include <string.h>
@@ -442,14 +452,19 @@ SUBJECT CODE : 18IS33   |  VTU - 3 rd Semester | Information Science and Compute
     }
     ```
 
+</details>
+
+
+    
 ---
 
 ## Stacks
 
 ***Q 3. Design and implement a stack (Array implementation/ Linked list implementation) and demonstrate its working with necessary inputs. Display the appropriate messages in case of exceptions***
 
-- Array implementation
-
+<details>
+<summary>Array implementation</summary>
+<br>
     ```c
     #include<stdio.h>
     #include<stdlib.h>
@@ -538,7 +553,11 @@ SUBJECT CODE : 18IS33   |  VTU - 3 rd Semester | Information Science and Compute
     }
     ```
 
-- Linked list implementation
+</details>
+
+<details>
+<summary>Linked list implementation</summary>
+<br>
 
     ```c
     #include<stdio.h>
@@ -644,9 +663,13 @@ SUBJECT CODE : 18IS33   |  VTU - 3 rd Semester | Information Science and Compute
     }
     ```
 
+</details>
+
 ***Q 4. Design and implement an algorithm for conversion of an expression from one form to another. Demonstrate its working with suitable inputs.***
 
-- Infix to postfix conversion
+<details>
+<summary>Infix to postfix conversion</summary>
+<br>
 
     [Infix to Postfix | Expression evaluation | Appliedcourse](https://www.youtube.com/watch?v=rUC2Rffejj8)
 
@@ -713,8 +736,11 @@ SUBJECT CODE : 18IS33   |  VTU - 3 rd Semester | Information Science and Compute
     	return 0;
     }
     ```
+</details>
 
-- Infix to prefix conversion
+<details>
+<summary>Infix to prefix conversion</summary>
+<br>
 
     [Convert Infix To Prefix Notation - GeeksforGeeks](https://www.geeksforgeeks.org/convert-infix-prefix-notation/)
 
@@ -817,12 +843,14 @@ SUBJECT CODE : 18IS33   |  VTU - 3 rd Semester | Information Science and Compute
     	return 0;
     }
     ```
+</details>
 
-- [x]  ⚠️Do infix to prefix
 
 ***Q 5. Design and implement an algorithm to evaluate an arithmetic expressions which may be any form (postfix, prefix, infix), and demonstrate its working with suitable examples.***
 
-- Postfix evaluation
+<details>
+<summary>Postfix evaluation</summary>
+<br>
 
     ```c
     #include<stdio.h>
@@ -892,6 +920,8 @@ SUBJECT CODE : 18IS33   |  VTU - 3 rd Semester | Information Science and Compute
     }
     ```
 
+</details>
+
 - Prefix evaluation
 - [ ]  ⚠️Do prefix evaluation
 
@@ -901,7 +931,9 @@ SUBJECT CODE : 18IS33   |  VTU - 3 rd Semester | Information Science and Compute
 
 ***Q 6. Design and implement a given type of (ordinary queue, circular queue) queue in C (array implementation/ Linked list implementation). And demonstrate its working with suitable inputs. Display appropriate messages in case of exceptions.***
 
-- Ordinary queue array implementation
+<details>
+<summary>Ordinary queue array implementation</summary>
+<br>
 
     ```c
     #include<stdio.h>
@@ -1010,8 +1042,11 @@ SUBJECT CODE : 18IS33   |  VTU - 3 rd Semester | Information Science and Compute
         printf("\n");
     }
     ```
+</details>
 
-- Ordinary queue linked list implementation
+<details>
+<summary>Ordinary queue linked list implementation</summary>
+<br>
 
     ```c
     #include<stdio.h>
@@ -1116,7 +1151,11 @@ SUBJECT CODE : 18IS33   |  VTU - 3 rd Semester | Information Science and Compute
     }
     ```
 
-- Circular queue using array
+</details>
+
+<details>
+<summary>Circular queue using array</summary>
+<br>
 
     ```c
     #include<stdio.h>
@@ -1343,6 +1382,8 @@ SUBJECT CODE : 18IS33   |  VTU - 3 rd Semester | Information Science and Compute
     }
     ```
 
+</details>
+
 ---
 
 ## Linked lists
@@ -1350,7 +1391,9 @@ SUBJECT CODE : 18IS33   |  VTU - 3 rd Semester | Information Science and Compute
 ***Q 7. Design and implement a dynamic list (Singly linked list/ doubly linked list) to store any
 information which needs a linear data structure.***
 
-- Singly linked list
+<details>
+<summary>Singly linked list</summary>
+<br>
 
     ```c
     #include<stdio.h>
@@ -1521,8 +1564,11 @@ information which needs a linear data structure.***
     	}while(choice!=8);
     }
     ```
+</details>
 
-- Doubly linked list
+<details>
+<summary>Doubly linked list</summary>
+<br>
 
     ```c
     #include<stdio.h>
@@ -1716,13 +1762,17 @@ information which needs a linear data structure.***
     }
     ```
 
+</details>
+
 ---
 
 ## Binary trees
 
 ***Q 8. Design and implement binary tree and demonstrate its working.***
 
-- Code
+<details>
+<summary>Code</summary>
+<br>
 
     ```c
     #include<stdio.h>
@@ -1793,6 +1843,8 @@ information which needs a linear data structure.***
         return 0;
     }
     ```
+
+</details>
 
 ---
 
