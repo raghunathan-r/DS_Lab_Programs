@@ -33,7 +33,7 @@ SUBJECT CODE : 18IS33   |  VTU - 3 rd Semester | Information Science and Compute
     // creating a user defined data type, matrxi for storing all the matrix related information
     typedef struct Matrix matrix;
 
-    // function definations
+    // function definitions
     matrix initMatrix();
     void displayMatrix (matrix temp);
     void multiplyMatrix (matrix mat1, matrix mat2); 
@@ -53,7 +53,7 @@ SUBJECT CODE : 18IS33   |  VTU - 3 rd Semester | Information Science and Compute
     		
     		switch(ch){
     			case 1:
-    				// initialiseing both the matrises
+    				// initialising both the matrises
     				printf ("\n\nEnter the details for matrix 1 :-");
     				mat1 = initMatrix();
     				printf ("\n\nEnter the details for matrix 2 :-");
@@ -61,7 +61,7 @@ SUBJECT CODE : 18IS33   |  VTU - 3 rd Semester | Information Science and Compute
     				break;
     			
     			case 2:
-    				printf("\nDisplying the entered matrix 1 :-\n");
+    				printf("\nDisplaying the entered matrix 1 :-\n");
     				displayMatrix (mat1);
     				printf("\nDisplaying the entered matrix 2 :-\n");
     				displayMatrix (mat2);
@@ -90,7 +90,7 @@ SUBJECT CODE : 18IS33   |  VTU - 3 rd Semester | Information Science and Compute
 
     matrix initMatrix(){
     	matrix temp;
-    	printf ("\nEnter the number of row and coloumns :-\n");
+    	printf ("\nEnter the number of row and columns :-\n");
     	scanf ("%d %d", &temp.row, &temp.col);
     	temp.M = (int *)malloc((temp.row * temp.col) * sizeof(temp));
     	
@@ -115,8 +115,8 @@ SUBJECT CODE : 18IS33   |  VTU - 3 rd Semester | Information Science and Compute
 
     void multiplyMatrix(matrix mat1, matrix mat2){
     	matrix prod;
-    	// rows are horizontal, coloumsn are vertical
-    	// for multiplying a matrix the no. of coloumns in the first matrix must be equal to number of rows in second
+    	// rows are horizontal, columsn are vertical
+    	// for multiplying a matrix the no. of columns in the first matrix must be equal to number of rows in second
     	if (mat1.col != mat2.row){
     		printf("\nERROR the matrix cannot be multiplied.");
     		return;
@@ -170,7 +170,7 @@ SUBJECT CODE : 18IS33   |  VTU - 3 rd Semester | Information Science and Compute
     	printf("\nEnter the second sting :-\n");
     	gets(str2);
     	
-    	printf("\n\n1. Concatante two strings\n2. Copy the first string\n3. Find the length of the string");
+    	printf("\n\n1. Concatenate two strings\n2. Copy the first string\n3. Find the length of the string");
     	printf("\n4. Compare two strings\n5. Reverse a string\n6. Exit\n");
     	do{
     		printf("\n__________________________\n");
@@ -179,7 +179,7 @@ SUBJECT CODE : 18IS33   |  VTU - 3 rd Semester | Information Science and Compute
     		
     		switch (ch){
     			case 1:
-    				printf("\nThe concatnated string is :-\n");
+    				printf("\nThe concatenated string is :-\n");
     				puts(stringConcat(str1, str2));
     				break;
     			
@@ -201,7 +201,7 @@ SUBJECT CODE : 18IS33   |  VTU - 3 rd Semester | Information Science and Compute
     				break;
     				
     			case 5:
-    				printf("\nDisplying the reverse of first string :-\n");
+    				printf("\nDisplaying the reverse of first string :-\n");
     				printf("%s", reverseString(str1));
     				break;
     				
